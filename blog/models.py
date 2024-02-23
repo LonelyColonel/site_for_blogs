@@ -39,7 +39,7 @@ class Post(models.Model):
         indexes = [
             models.Index(fields=['-publish'])
         ]
-
+    
     def __str__(self) -> str:
         return self.title
 
