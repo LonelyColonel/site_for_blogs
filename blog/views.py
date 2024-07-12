@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
-from .forms import EmailPostForm
+from .forms import EmailPostField
 
 
 class PostListView(ListView):
@@ -16,11 +16,11 @@ def post_share(request, post_id):
                              id=post_id,
                              status=Post.Status.PUBLISHED)
     if request.method == 'POST':
-        form = EmailPostForm(request.POST)
+        form = EmailPostField(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
     else:
-        form = EmailPostForm()
+        form = EmailPostField()
     return render(request, 'blog/post/share.html', {'post': post,
                                                     'form': form})
 
