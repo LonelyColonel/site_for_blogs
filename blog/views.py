@@ -42,7 +42,11 @@ def post_detail(request, year, month, day, post_slug):
     post = get_object_or_404(Post, slug=post_slug, publish__year=year, 
                              publish__month=month, publish__day=day, 
                              status=Post.Status.PUBLISHED)
-    return render(request, 'blog/post/detail.html', {'post': post})
+    comments = post.comments.filter(active=True)
+    form = CommentForm()
+    return render(request, 'blog/post/detail.html', {'post': post,
+                                                     'comments': comments,
+                                                     'form': form})
 
 
 @require_POST
